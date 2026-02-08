@@ -12,7 +12,7 @@ It gives us more motivation to keep continuing this project and making this app 
 
 # What we use:
 ## Programming language:
-- Python
+- Python (3.13)
 
 ## Python Libraries:
 - Request
