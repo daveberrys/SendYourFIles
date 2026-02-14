@@ -6,9 +6,24 @@
 </div>
 
 # Preview
-<img src="readme/preview/mainState.png" width="300" alt="Main State Preview">
-<img src="readme/preview/uploadTo.png" width="300" alt="Upload To Preview">
-<img src="readme/preview/credits.png" width="300" alt="Credits Preview">
+<div align="center">
+  <img src="readme/preview/mainState.png" width="300" alt="Main State Preview">
+  <img src="readme/preview/uploadTo.png" width="300" alt="Upload To Preview">
+  <img src="readme/preview/credits.png" width="300" alt="Credits Preview">
+</div>
+
+# Download links
+<ul>
+  <h2> Stable Release </h2>
+  <li><a href="https://github.com/daveberrys/SendYourFiles/releases"> Page to stable release, here! </a></li>
+</ul>
+
+<ul>
+  <h2> Nightly Release </h2>
+  <li><a href="https://nightly.link/daveberrys/SendYourFIles/workflows/building/main/SendYourFiles-Windows.zip"> Windows </a></li>
+  <li><a href="https://nightly.link/daveberrys/SendYourFIles/workflows/building/main/SendYourFiles-MacOS.zip"> macOS </a></li>
+  <li><a href="https://nightly.link/daveberrys/SendYourFIles/workflows/building/main/SendYourFiles-Linux.zip"> Linux </a></li>
+</ul>
 
 # Why did we make this?
 We didn't like Discord's 10 mb restriction. We usually have big files, like zips, videos and such.
