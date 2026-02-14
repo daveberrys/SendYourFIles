@@ -22,7 +22,7 @@ def startUp(debugMode):
         url=here,
         width=800,
         height=600,
-        js_api=API
+        js_api=API()
     )
 
     window.events.loaded += loadCSS

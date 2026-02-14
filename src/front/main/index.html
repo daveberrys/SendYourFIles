@@ -1,6 +1,75 @@
+<link rel="stylesheet" href="popup/popupStyle.css">
+
 <script>
-    async function printSomething() {
-        console.log("helo")
+    let selectedPath = null;
+
+    async function loadPopups() {
+        const popups = ['sendTo.html', 'sendTo-Fallback.html', 'settings.html', 'credits.html'];
+
+        for (const file of popups) {
+            try {
+                const response = await fetch(`popup/${file}`);
+                const html = await response.text();
+                document.body.insertAdjacentHTML('beforeend', html);
+                console.log(`Loaded popup: ${file}`);
+            } catch (e) {
+                console.error(`Failed to load ${file}:`, e);
+            }
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', loadPopups);
+
+    async function chooseFile() {
+        try {
+            const path = await window.pywebview.api.pickFile();
+            if (path) {
+                selectedPath = path;
+                const fileName = path.split(/[\\/]/).pop();
+                document.getElementById("logs").innerText = `Selected: ${fileName}`;
+            }
+        } catch (e) {
+            console.error("Failed to pick file:", e);
+        }
+    }
+
+    function showPopup(id) {
+        console.log(`Attempting to show: ${id}`);
+        if (id === 'platformPopup' && !selectedPath) {
+            showPopup('fallbackPopup');
+            return;
+        }
+
+        const popup = document.getElementById(id);
+        if (popup) {
+            popup.style.display = "flex";
+        } else {
+            console.error(`Could not find popup with ID: ${id}`);
+        }
+    }
+
+    function closePopup(id) {
+        console.log(`Attempting to close: ${id}`);
+        const popup = document.getElementById(id);
+        if (popup) {
+            popup.style.display = "none";
+        } else {
+            console.error(`Could not find popup to close: ${id}`);
+        }
+    }
+
+    async function triggerUpload(platform) {
+        closePopup('platformPopup');
+        const logPanel = document.getElementById("logs");
+        logPanel.innerText = `Preparing upload to ${platform}...`;
+
+        try {
+            const result = await window.pywebview.api.uploadTo(selectedPath, platform);
+            logPanel.innerText = `Success! Link: ${result}`;
+        } catch (e) {
+            logPanel.innerText = "Error: Could not reach the server.";
+            console.error(e);
+        }
     }
 </script>
 
@@ -8,24 +77,24 @@
     <div class="frame">
         <div class="textYap">
             <span class="bigText"> Send Your Files </span>
-            <p>Ever wanted to send your files without a restrction?</p>
+            <p>Ever wanted to send your files without a restriction?</p>
             <p></p>
         </div>
 
         <div class="flex" style="gap: 5px;">
-            <div class="button" onclick="settings()">Settings</div>
-            <div class="button" onclick="printSomething()">Credits</div>
+            <div class="button" onclick="showPopup('settingsPopup')">Settings</div>
+            <div class="button" onclick="showPopup('creditsPopup')">Credits</div>
         </div>
     </div>
 
     <div class="frame">
         <div class="anotherElem">
-            <span>No logs yet. Send a file!</span>
+            <pre id="logs">No logs yet. Send a file!</pre>
         </div>
 
         <div class="flex" style="gap: 5px;">
-            <div class="button">Choose File</div>
-            <div class="button">Send File to...</div>
+            <div class="button" onclick="chooseFile()">Choose File</div>
+            <div class="button" onclick="showPopup('platformPopup')">Upload to...</div>
         </div>
     </div>
 </main>

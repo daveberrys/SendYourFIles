@@ -1,0 +1,65 @@
+<div id="creditsPopup" class="popup-overlay" onclick="if(event.target == this) closePopup('creditsPopup')">
+    <div class="popup-content">
+        <h3>Credits</h3>
+        
+        <a href="https://codedave.pages.dev/">
+            <div class="item">
+                <img src="https://codedave.pages.dev/assets/misc/Daveberry%20Wave.png" width="50" height="50" alt="Daveberry"/>
+
+                <div class="info">
+                    <span class="bigText">Daveberry</span> <br/>
+                    <span class="role"> Lead Dev </span> <br/>
+                    <span> The guy who did everything in this native app </span>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://runyra.neocities.org/">
+            <div class="item">
+                <img src="https://runyra.neocities.org/runa.png" width="50" height="50" alt="Runyra" class="circleProfile"/>
+
+                <div class="info">
+                    <span class="bigText">Runyra</span> <br/>
+                    <span class="role"> Lead Dev </span> <br/>
+                    <span> Basically nothing, but working on the Vencord/Equicord plugin in discord.</span>
+                </div>
+            </div>
+        </a>
+
+        <div class="button secondary" onclick="closePopup('creditsPopup')">Close</div>
+    </div>
+</div>
+
+<style>
+    .item {
+        background-color: var(--elemColor);
+        border-radius: 8px;
+
+        width: auto;
+        height: max-content;
+        padding: 8px;
+
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+
+        gap: 5px;
+    }
+
+    .circleProfile {
+        border-radius: 100%;
+    }
+    
+    a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .info {
+        text-align: left;
+    }
+
+    .role {
+        font-weight: bold;
+    }
+</style>
