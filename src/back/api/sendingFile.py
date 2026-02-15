@@ -54,7 +54,11 @@ def buzzheavier(file_path):
         with open(file_path, "rb") as f:
             response = requests.put(url, data=f, headers=HEADERS)
             if response.status_code in [200, 201]:
-                return response.text.strip()
+                data = response.json()
+                file_id = data.get("data", {}).get("id")
+                if file_id:
+                    return f"https://buzzheavier.com/{file_id}"
+                return "Error: Could not find file ID in response."
             return f"Server Error: {response.status_code}"
     except Exception as e:
         return f"Request Failed: {str(e)}"

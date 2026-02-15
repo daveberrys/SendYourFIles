@@ -3,6 +3,7 @@ import os
 
 from src.back.api.sendingFile import catbox, litterbox, buzzheavier
 from src.back.api.checkForUpdate import isUpdateAvailable
+from src.back.util.notify import notify
 
 class API:
     def pickFile(self):
@@ -15,13 +16,25 @@ class API:
         return None
 
     def uploadTo(self, path, platform, duration="1h"):
+        filename = os.path.basename(path)
+        notify("Upload Started", f"Sending {filename} to {platform}...")
+
+        result = ""
         if platform == "catbox":
-            return catbox(path)
+            result = catbox(path)
         elif platform == "litterbox":
-            return litterbox(path, duration)
+            result = litterbox(path, duration)
         elif platform == "buzzheavier":
-            return buzzheavier(path)
-        return "Unknown platform"
+            result = buzzheavier(path)
+        else:
+            result = "Unknown platform"
+
+        if result.startswith("http"):
+            notify("Upload Success!", f"Link: {result}")
+        else:
+            notify("Upload Failed", f"Problem with {platform}: {result}")
+
+        return result
 
     def checkForUpdates(self):
         try:
@@ -29,4 +42,4 @@ class API:
                 currentVersion = f.read().strip()
             return isUpdateAvailable(currentVersion)
         except Exception as e:
-            return f"Error: {str(e)}"
+            return {"status": "error", "message": str(e)}
