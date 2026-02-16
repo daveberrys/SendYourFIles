@@ -19,7 +19,7 @@ class Sys:
         return configPath
 
 class Settings:
-    def saveSettings(self):
+    def checkFolder(self):
         configPath = Sys.getOSpath(self)
         if not os.path.exists(configPath):
             try:
@@ -31,5 +31,3 @@ class Settings:
                 print.fatal(f"Fatal error creating config path: {e}")
         else:
             print.debug(f"Config path already exists: {configPath}")
-        print.debug("Not yet.")
-        

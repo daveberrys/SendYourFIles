@@ -1,6 +1,8 @@
 import requests
 import os
 
+from src.back.system.history import History as his
+
 # main reason why this is here:
 # 1. catbox for some reason need this
 # 2. this is probably required
@@ -22,6 +24,7 @@ def catbox(file_path):
             if response.status_code == 200:
                 result = response.text.strip()
                 if result:
+                    his().storeHistory("catbox", os.path.basename(file_path), result, "")
                     return result
                 return "Error: Server returned empty response."
             return f"Server Error: {response.status_code}"
@@ -40,6 +43,7 @@ def litterbox(file_path, duration="1h"):
             if response.status_code == 200:
                 result = response.text.strip()
                 if result:
+                    his().storeHistory("litterbox", os.path.basename(file_path), result, duration)
                     return result
                 return "Error: Server returned empty response."
             return f"Server Error: {response.status_code}"
@@ -55,9 +59,10 @@ def buzzheavier(file_path):
             response = requests.put(url, data=f, headers=HEADERS)
             if response.status_code in [200, 201]:
                 data = response.json()
-                file_id = data.get("data", {}).get("id")
-                if file_id:
-                    return f"https://buzzheavier.com/{file_id}"
+                fileID = data.get("data", {}).get("id")
+                if fileID:
+                    his().storeHistory("buzzheavier", filename, f"https://buzzheavier.com/{fileID}", "")
+                    return f"https://buzzheavier.com/{fileID}"
                 return "Error: Could not find file ID in response."
             return f"Server Error: {response.status_code}"
     except Exception as e:
