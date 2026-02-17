@@ -22,7 +22,7 @@ class API:
     def uploadTo(self, path, platform, duration="1h"):
         filename = os.path.basename(path)
         
-        if Settings().readSet._notifyYou():
+        if Settings().getSetting("notifyYou"):
             notify("Upload Started", f"Sending {filename} to {platform}...")
 
         result = ""
@@ -36,16 +36,16 @@ class API:
             result = "Unknown platform"
 
         if result.startswith("http"):
-            if Settings().readSet._notifyYou():
+            if Settings().getSetting("notifyYou"):
                 notify("Upload Success!", f"Link: {result}")
         else:
-            if Settings().readSet._notifyYou():
+            if Settings().getSetting("notifyYou"):
                 notify("Upload Failed", f"Problem with {platform}: {result}")
 
         return result
 
     def checkForUpdates(self):
-        if not Settings().readSet._checkForUpdates():
+        if not Settings().getSetting("checkForUpdates"):
             print.debug("Updates disabled by user.")
             return {"status": "disabled"}
 

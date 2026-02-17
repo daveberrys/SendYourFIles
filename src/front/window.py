@@ -45,7 +45,7 @@ class WindowManager:
             height=600,
         )
 
-        if Settings().readSet._minimizeToTray():
+        if Settings().getSetting("minimizeToTray"):
             self.window.events.closing += self.onWindowClosing
 
     def onWindowClosing(self):
@@ -88,7 +88,7 @@ class WindowManager:
         if self.debugMode:
             print.success("Debug mode is active.")
 
-        if Settings().readSet._minimizeToTray():
+        if Settings().getSetting("minimizeToTray"):
             trayThread = threading.Thread(target=self.setupTray, daemon=True)
             trayThread.start()
 

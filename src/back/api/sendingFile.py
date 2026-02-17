@@ -25,7 +25,7 @@ def catbox(file_path):
             if response.status_code == 200:
                 result = response.text.strip()
                 if result:
-                    if Settings().readSet._history():
+                    if Settings().getSetting("history"):
                         his().storeHistory("catbox", os.path.basename(file_path), result, "")
                     return result
                 return "Error: Server returned empty response."
@@ -45,7 +45,7 @@ def litterbox(file_path, duration="1h"):
             if response.status_code == 200:
                 result = response.text.strip()
                 if result:
-                    if Settings().readSet._history():
+                    if Settings().getSetting("history"):
                         his().storeHistory("litterbox", os.path.basename(file_path), result, duration)
                     return result
                 return "Error: Server returned empty response."
@@ -64,7 +64,7 @@ def buzzheavier(file_path):
                 data = response.json()
                 fileID = data.get("data", {}).get("id")
                 if fileID:
-                    if Settings().readSet._history():
+                    if Settings().getSetting("history"):
                         his().storeHistory("buzzheavier", filename, f"https://buzzheavier.com/{fileID}", "")
                     return f"https://buzzheavier.com/{fileID}"
                 return "Error: Could not find file ID in response."

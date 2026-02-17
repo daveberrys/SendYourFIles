@@ -32,14 +32,10 @@ class Settings:
         self.defaultSettingsPath = os.path.join(os.path.dirname(__file__), "extra", "settings.json")
         
         if not os.path.exists(self.defaultSettingsPath):
-            # Fallback for running from root
             self.defaultSettingsPath = os.path.abspath(os.path.join("src", "back", "extra", "settings.json"))
 
         self.defaultSettings = {}
         self.settings = {}
-
-        # passing through
-        self.readSet = self.ReadSettings(self.settingsPath)
 
     def checkFolder(self):
         if os.path.exists(self.configPath):
@@ -107,37 +103,9 @@ class Settings:
             print.error(f"Error updating setting: {e}")
             return False
     
-    class ReadSettings:
-        def __init__(self, path):
-            self.settingPath = path
-
-        def _checkForUpdates(self):
-            try:
-                with open(self.settingPath, "r") as f:
-                    return json.load(f).get("checkForUpdates", True)
-            except Exception:
-                pass
-
-        def _history(self):
-            try:
-                with open(self.settingPath, "r") as f:
-                    return json.load(f).get("history", True)
-            except Exception:
-                pass
-            return True
-
-        def _minimizeToTray(self):
-            try:
-                with open(self.settingPath, "r") as f:
-                    return json.load(f).get("minimizeToTray", True)
-            except Exception:
-                pass
-            return True
-        
-        def _notifyYou(self):
-            try:
-                with open(self.settingPath, "r") as f:
-                    return json.load(f).get("notifyYou", True)
-            except Exception:
-                pass
-            return True
+    def getSetting(self, key):
+        try:
+            with open(self.settingsPath, "r") as f:
+                return json.load(f).get(key, True)
+        except Exception:
+            pass
