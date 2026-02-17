@@ -1,9 +1,42 @@
 <div id="settingsPopup" class="popup-overlay" onclick="if(event.target == this) closePopup('settingsPopup')">
     <div class="popup-content">
         <h3>Settings</h3>
-        <p>Coming soon...</p>
-        <p>EST: Probably whenever I'm motivated to do it.</p>
-        <span class="smallText">hint hint: gift me something and I'll do it faster 👀</span>
+        <pre id="localCurrentVersion">Current Local Version: ???</pre>
+
+        <div class="overflow" style="height: 300px;">
+            <!-- Settings will be loaded here -->
+        </div>
         <div class="button secondary" onclick="closePopup('settingsPopup')">Close</div>
     </div>
 </div>
+
+<style>
+    .item {
+        background-color: var(--elemColor);
+        border-radius: 8px;
+
+        width: auto;
+        height: max-content;
+        padding: 8px;
+
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        gap: 5px;
+    }
+    
+    .info {
+        text-align: left;
+    }
+    
+    span {
+        color: white;
+    }
+
+    .item.settings-item {
+        display: block;
+    }
+</style>

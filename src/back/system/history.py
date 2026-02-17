@@ -21,7 +21,6 @@ OPEN SOURCE IS LOVE, OPEN SOURCE IS LIFE.
 
 """
 
-
 import json
 import os
 import datetime
@@ -40,8 +39,8 @@ class History:
             print.success(f"History found at: {self.historyPath}")
             return True
         else:
-            print.error(f"History not found at: {self.historyPath}")
-            print.success(f"Creating history at: {self.historyPath}")
+            print.warning(f"History not found at: {self.historyPath}")
+            print.debug(f"Creating history at: {self.historyPath}")
 
             try:
                 se.checkFolder(self)
@@ -53,7 +52,7 @@ class History:
                 print.error(f"Error creating history: {e}")
                 return False
             except OSError as e:
-                print.fatal(f"Fatal error creating history: {e}")
+                print.fatal(f"Fatal OS error creating history: {e}")
                 return False
 
     def storeHistory(self, service, filename, link, litterboxdur):
@@ -73,4 +72,3 @@ class History:
             return print.success(f"History stored at: {self.historyPath}")
         except Exception as e:
             return print.error(f"Error storing history: {e}")
-

@@ -55,10 +55,68 @@
         }
     }
 
+    async function saveSetting(key, value) {
+        try {
+            await window.pywebview.api.saveSettings(key, value);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function loadSettings() {
+        const container = document.querySelector('#settingsPopup .overflow');
+        if (!container) return;
+        
+        container.innerHTML = '';
+
+        try {
+            const data = await window.pywebview.api.getSettings();
+            const settings = data.settings;
+
+            if (!settings || Object.keys(settings).length === 0) {
+                container.innerHTML = '<p style="padding: 10px; color: white;">No settings found.</p>';
+                return;
+            }
+
+            for (const key in settings) {
+                const item = settings[key];
+                
+                if (item.type === 'boolean') {
+                    const div = document.createElement('div');
+                    div.className = 'item settings-item';
+                    
+                    const isTrue = item.default === 'true';
+                    
+                    div.innerHTML = `
+                        <div class="info">
+                            <span class="bigText">${item.name}</span><br>
+                            <span>${item.description}</span>
+                        </div>
+
+                        <select id="${key}" onchange="saveSetting('${key}', this.value === 'true')">
+                            <option value="true" ${isTrue ? 'selected' : ''}>True</option>
+                            <option value="false" ${!isTrue ? 'selected' : ''}>False</option>
+                        </select>
+                    `;
+                    
+                    container.appendChild(div);
+                }
+            }
+        } catch (error) {
+            console.error("Failed to load settings:", error);
+            container.innerHTML = "<p>Error loading settings.</p>";
+        }
+    }
+
     function showPopup(id) {
         if (id === 'platformPopup' && !selectedPath) {
             showPopup('fallbackPopup');
             return;
+        }
+
+        if (id === 'settingsPopup') {
+            loadSettings();
+            currentLocalVersion();
         }
 
         const popup = document.getElementById(id);
@@ -186,6 +244,18 @@
             }
         } catch (e) {
             console.error("Javascript failed to call update check:", e);
+        }
+    }
+
+    async function currentLocalVersion() {
+        try {
+            const result = await window.pywebview.api.localCurrentVersion();
+            const versionText = document.getElementById('localCurrentVersion');
+            if (versionText) {
+                versionText.innerText = `Current Local Version: ${result}`;
+            }
+        } catch (e) {
+            console.error("Javascript failed to call get local version:", e);
         }
     }
 </script>
