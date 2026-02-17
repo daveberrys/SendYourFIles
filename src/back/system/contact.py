@@ -21,7 +21,9 @@ class API:
 
     def uploadTo(self, path, platform, duration="1h"):
         filename = os.path.basename(path)
-        notify("Upload Started", f"Sending {filename} to {platform}...")
+        
+        if Settings().readSet._notifyYou():
+            notify("Upload Started", f"Sending {filename} to {platform}...")
 
         result = ""
         if platform == "catbox":
@@ -34,13 +36,19 @@ class API:
             result = "Unknown platform"
 
         if result.startswith("http"):
-            notify("Upload Success!", f"Link: {result}")
+            if Settings().readSet._notifyYou():
+                notify("Upload Success!", f"Link: {result}")
         else:
-            notify("Upload Failed", f"Problem with {platform}: {result}")
+            if Settings().readSet._notifyYou():
+                notify("Upload Failed", f"Problem with {platform}: {result}")
 
         return result
 
     def checkForUpdates(self):
+        if not Settings().readSet._checkForUpdates():
+            print.debug("Updates disabled by user.")
+            return {"status": "disabled"}
+
         # checks if the local file exists
         try:
             if getattr(sys, 'frozen', False):

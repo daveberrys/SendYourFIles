@@ -7,6 +7,7 @@ from PIL import Image
 
 import src.back.util.print as print
 from src.back.system.contact import API
+from src.back.system.settings import Settings
 
 class WindowManager:
     def __init__(self):
@@ -44,7 +45,8 @@ class WindowManager:
             height=600,
         )
 
-        self.window.events.closing += self.onWindowClosing
+        if Settings().readSet._minimizeToTray():
+            self.window.events.closing += self.onWindowClosing
 
     def onWindowClosing(self):
         print.debug("X clicked! Hiding to tray and clearing RAM...")
@@ -86,8 +88,9 @@ class WindowManager:
         if self.debugMode:
             print.success("Debug mode is active.")
 
-        trayThread = threading.Thread(target=self.setupTray, daemon=True)
-        trayThread.start()
+        if Settings().readSet._minimizeToTray():
+            trayThread = threading.Thread(target=self.setupTray, daemon=True)
+            trayThread.start()
 
         self.createWindow()
         wv.start(

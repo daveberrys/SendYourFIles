@@ -32,10 +32,13 @@
         }
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        loadPopups().then(() => {
-            checkUpdates(); // Call this AFTER popups are loaded
-        });
+    window.addEventListener('DOMContentLoaded', async () => {
+        await loadPopups();
+        if (window.pywebview) {
+            checkUpdates();
+        } else {
+            window.addEventListener('pywebviewready', checkUpdates);
+        }
     });
 
     async function chooseFile() {
@@ -224,7 +227,6 @@
         }
     }
 
-    // I don't even wanna explain how this works dude
     async function checkUpdates() {
         try {
             const result = await window.pywebview.api.checkForUpdates();
@@ -243,7 +245,7 @@
                 showPopup('newUpdateAvailablePopup');
             }
         } catch (e) {
-            console.error("Javascript failed to call update check:", e);
+            console.error("Failed to check for updates:", e);
         }
     }
 
@@ -251,7 +253,7 @@
         try {
             const result = await window.pywebview.api.localCurrentVersion();
             const versionText = document.getElementById('localCurrentVersion');
-            if (versionText) {
+            if (versionText && result) {
                 versionText.innerText = `Current Local Version: ${result}`;
             }
         } catch (e) {

@@ -65,3 +65,8 @@
 .secondary {
     margin-top: 20px !important;
 }
+
+.headerText {
+    font-weight: bold;
+    font-size: 25px;
+}
