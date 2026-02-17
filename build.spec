@@ -21,6 +21,7 @@ a = Analysis(
     ('src', 'src'),
     ('assets', 'assets'),
     ('version.txt', '.'),
+    ('src/back/extra/settings.json', 'src/back/system/extra'),
   ],
   hiddenimports=[
     'webview.platforms.winforms',
@@ -57,11 +58,11 @@ exe = EXE(
   upx=True,
   upx_exclude=[],
   runtime_tmpdir=None,
-  console=False, # Set to False for a clean windowed app
+  console=False,
   disable_windowed_traceback=False,
   argv_emulation=False,
   target_arch=None,
   codesign_identity=None,
   entitlements_file=None,
-  icon=icon_file, # This sets the Desktop/File icon!
+  icon=icon_file,
 )
