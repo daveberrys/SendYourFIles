@@ -16,11 +16,10 @@ linuxData = []
 linuxHiddenImports = []
 if sys.platform.startswith('linux'):
   linuxData = [
-    ('/usr/lib/girepository-1.0/DBus-1.0.typelib', 'gi_typelibs/DBus-1.0.typelib'),
-    ('/usr/lib/girepository-1.0/AyatanaAppIndicator3-0.1.typelib', 'gi_typelibs/AyatanaAppIndicator3-0.1.typelib'),
-    ('/usr/lib/girepository-1.0/AppIndicator3-0.1.typelib', 'gi_typelibs/AppIndicator3-0.1.typelib'),  # fallback
-    ('/usr/lib/girepository-1.0/Gtk-3.0.typelib', 'gi_typelibs/Gtk-3.0.typelib'),
-    ('/usr/lib/girepository-1.0/GObject-2.0.typelib', 'gi_typelibs/GObject-2.0.typelib'),
+    ('/usr/lib/x86_64-linux-gnu/girepository-1.0/DBus-1.0.typelib', 'gi_typelibs/DBus-1.0.typelib'),
+    ('/usr/lib/x86_64-linux-gnu/girepository-1.0/AyatanaAppIndicator3-0.1.typelib', 'gi_typelibs/AyatanaAppIndicator3-0.1.typelib'),
+    ('/usr/lib/x86_64-linux-gnu/girepository-1.0/Gtk-3.0.typelib', 'gi_typelibs/Gtk-3.0.typelib'),
+    ('/usr/lib/x86_64-linux-gnu/girepository-1.0/GObject-2.0.typelib', 'gi_typelibs/GObject-2.0.typelib'),
   ]
   
   linuxHiddenImports = [
@@ -30,7 +29,6 @@ if sys.platform.startswith('linux'):
     'gi.repository.Gtk',
     'gi.repository.DBus',
     'gi.repository.AyatanaAppIndicator3',
-    'gi.repository.AppIndicator3',
     'pystray._appindicator',
     'pystray._util.gtk',
     'pystray._util.notify_dbus',
