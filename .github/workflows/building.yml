@@ -57,7 +57,8 @@ jobs:
                   gir1.2-ayatanaappindicator3-0.1 \
                   dbus \
                   libdbus-1-dev \
-                  gir1.2-dbusmenu-gtk3-0.4
+                  gir1.2-dbusmenu-gtk3-0.4 \
+                  gir1.2-dbus-1.0
             
             - name: Install Python dependencies
               run: pip install -r requirements.txt
